@@ -21,17 +21,23 @@ class HttpresourcesController extends Controller
     public function behaviors()
     {
         return [
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'httpresource'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'httpresource'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'index' => ['get'],
+                    'attempt' => ['get'],
+                ],
             ],
         ];
     }
@@ -43,11 +49,7 @@ class HttpresourcesController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $httpResources = HttpResource::find()->orderBy(['created_at' => SORT_DESC]);
+        $httpResources = HttpResource::find()->orderBy(['id' => SORT_DESC]);
 
         $pagination = new Pagination([
             'defaultPageSize' => 50,
@@ -67,13 +69,9 @@ class HttpresourcesController extends Controller
      */
     public function actionHttpresource()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         $httpResource = HttpResource::find()->where(['id' => Yii::$app->request->get()['id']])->one();
 
-        $attempts = $httpResource->getAttempts()->orderBy(['created_at' => SORT_DESC]);
+        $attempts = $httpResource->getAttempts()->orderBy(['id' => SORT_DESC]);
 
         $pagination = new Pagination([
             'defaultPageSize' => 25,

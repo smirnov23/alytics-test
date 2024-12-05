@@ -21,17 +21,23 @@ class AttemptsController extends Controller
     public function behaviors()
     {
         return [
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => \yii\web\ErrorAction::class,
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['index', 'attempt'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'attempt'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'index' => ['get'],
+                    'attempt' => ['get'],
+                ],
             ],
         ];
     }
@@ -43,11 +49,7 @@ class AttemptsController extends Controller
      */
     public function actionIndex()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $attempts = Attempt::find()->with('httpResource')->orderBy(['created_at' => SORT_DESC]);
+        $attempts = Attempt::find()->with('httpResource')->orderBy(['id' => SORT_DESC]);
 
         $pagination = new Pagination([
             'defaultPageSize' => 50,
@@ -67,10 +69,6 @@ class AttemptsController extends Controller
      */
     public function actionAttempt()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
         return $this->render('attempt', [
             'attempt' => Attempt::find()->where(['id' => Yii::$app->request->get()['id']])->one(),
         ]);

@@ -28,7 +28,7 @@ class AttemptsController extends Controller {
                     [
                         '>=',
                         new Expression('extract(epoch from now() - attempted_at)'),
-                        new Expression('attempt_frequency * 60')
+                        new Expression('attempt_frequency * 60 - 10')
                     ],
                     [
                         'or',
@@ -36,7 +36,7 @@ class AttemptsController extends Controller {
                         [
                             '>=',
                             new Expression('extract(epoch from now() - attempted_at)'),
-                            new Expression('fail_delay * 60')
+                            new Expression('fail_delay * 60 - 10')
                         ]
                     ]
                 ]

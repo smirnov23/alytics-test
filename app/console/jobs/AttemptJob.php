@@ -35,8 +35,6 @@ class AttemptJob extends BaseObject implements JobInterface
             $attempt->http_code = $httpCode;
             $attempt->response = $response;
             $attempt->number = $httpResource->getAttempts()->count() + 1;
-            $attempt->created_at = new Expression('NOW()');
-            $attempt->updated_at = new Expression('NOW()');
             $attempt->insert();
 
             if ($response === false || $httpCode === 0 || $httpCode >= 400) {
