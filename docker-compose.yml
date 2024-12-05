@@ -32,10 +32,11 @@ services:
       - alytics-network
 
   phpfpm:
-    image: bitnami/php-fpm:latest
+    build: .
     container_name: phpfpm
     volumes:
       - "./app:/app"
+    command: bash -c "chmod -R 777 /app/frontend/runtime && cd /app && (yes | php yii migrate/up) && php-fpm"
     depends_on:
       #- postgres
       rabbitmq:
@@ -79,7 +80,7 @@ services:
   # development container
   # after development it can be deleted
   dev-container:
-    image: composer/composer
+    image: php:latest
     container_name: dev-container
     command: /bin/bash
     tty: true
