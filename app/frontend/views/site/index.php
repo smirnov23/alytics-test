@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin() ?>
                 <?= $form->field($model, 'url')->textInput(['autofocus' => true, 'required' => true]) ?>
                 <?= $form->field($model, 'attempt_frequency')->dropDownList(['1' => Yii::t('app','every minute'), '5' => Yii::t('app','every 5 minutes'), '10' => Yii::t('app','every 10 minutes')]) ?>
-                <?= $form->field($model, 'attempt_limit')->textInput(['type' => 'number', 'required' => true, 'value' => 0]) ?>
-                <?= $form->field($model, 'delay')->textInput(['type' => 'number', 'required' => true, 'value' => 1]) ?>
+                <?= $form->field($model, 'fail_limit')->textInput(['type' => 'number', 'required' => true, 'value' => 0]) ?>
+                <?= $form->field($model, 'fail_delay')->textInput(['type' => 'number', 'required' => true, 'value' => 1]) ?>
                 <div class="form-group">
                     <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
                 </div>

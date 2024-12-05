@@ -18,8 +18,8 @@ class m241203_074709_attempt extends Migration
             'http_code' => $this->smallInteger()->notNull(),
             'response' => $this->text()->notNull(),
             'number' => $this->integer()->notNull()->defaultValue(0),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->datetime()->notNull(),
+            'updated_at' => $this->datetime()->notNull(),
         ]);
 
         $this->createIndex(

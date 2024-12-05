@@ -33,20 +33,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?=$httpResource->attempt_frequency?></td>
                 </tr>
                 <tr>
-                    <td><?=Yii::t('app','Attempt Limit')?></td>
-                    <td><?=$httpResource->attempt_limit?></td>
+                    <td><?=Yii::t('app','Fail Limit')?></td>
+                    <td><?=$httpResource->fail_limit?></td>
                 </tr>
                 <tr>
-                    <td><?=Yii::t('app','Delay')?></td>
-                    <td><?=$httpResource->delay?></td>
+                    <td><?=Yii::t('app','Fail Delay')?></td>
+                    <td><?=$httpResource->fail_delay?></td>
+                </tr>
+                <tr>
+                    <td><?=Yii::t('app','Fails')?></td>
+                    <td><?=$httpResource->fails?></td>
                 </tr>
                 <tr>
                     <td><?=Yii::t('app','Created At')?></td>
-                    <td><?=date('Y-m-d H:i:s', $httpResource->created_at)?></td>
+                    <td><?=$httpResource->created_at?></td>
                 </tr>
                 <tr>
                     <td><?=Yii::t('app','Updated At')?></td>
-                    <td><?=date('Y-m-d H:i:s', $httpResource->updated_at)?></td>
+                    <td><?=$httpResource->updated_at?></td>
                 </tr>
             </tbody>
         </table>
@@ -66,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= Html::a($attempt->id, ['attempts/attempt', 'id' => $attempt->id]) ?></td>
                     <td class="text-end"><?=$attempt->http_code?></td>
                     <td class="text-end"><?=$attempt->number?></td>
-                    <td><?=date('Y-m-d H:i:s', $attempt->created_at)?></td>
+                    <td><?=$attempt->created_at?></td>
                 </tr>
             <?endforeach;?>
             </tbody>

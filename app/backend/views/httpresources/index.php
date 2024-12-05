@@ -18,8 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th scope="col"><?=Yii::t('app','id')?></th>
                     <th scope="col"><?=Yii::t('app','URL')?></th>
                     <th scope="col"><?=Yii::t('app','Attempt Frequency')?></th>
-                    <th scope="col"><?=Yii::t('app','Attempt Limit')?></th>
-                    <th scope="col"><?=Yii::t('app','Delay')?></th>
+                    <th scope="col"><?=Yii::t('app','Fail Limit')?></th>
+                    <th scope="col"><?=Yii::t('app','Fail Delay')?></th>
+                    <th scope="col"><?=Yii::t('app','Fails')?></th>
                     <th scope="col"><?=Yii::t('app','Created At')?></th>
                     <th scope="col"><?=Yii::t('app','Updated At')?></th>
                 </tr>
@@ -30,10 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= Html::a($httpResource->id, ['httpresources/httpresource', 'id' => $httpResource->id]) ?></td>
                     <td><?= Html::a($httpResource->url, $httpResource->url, ['target' => '_blank']) ?></td>
                     <td class="text-end"><?=$httpResource->attempt_frequency?></td>
-                    <td class="text-end"><?=$httpResource->attempt_limit?></td>
-                    <td class="text-end"><?=$httpResource->delay?></td>
-                    <td><?=date('Y-m-d H:i:s', $httpResource->created_at)?></td>
-                    <td><?=date('Y-m-d H:i:s', $httpResource->updated_at)?></td>
+                    <td class="text-end"><?=$httpResource->fail_limit?></td>
+                    <td class="text-end"><?=$httpResource->fail_delay?></td>
+                    <td class="text-end"><?=$httpResource->fails?></td>
+                    <td><?=$httpResource->created_at?></td>
+                    <td><?=$httpResource->updated_at?></td>
                 </tr>
             <?endforeach;?>
             </tbody>

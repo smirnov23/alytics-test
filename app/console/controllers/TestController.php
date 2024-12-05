@@ -11,14 +11,14 @@ use yii\db\Expression;
 /**
  * Attempts controller
  */
-class AttemptsController extends Controller {
+class TestController extends Controller {
 
     public function actionIndex() {
         if (!Yii::$app->mutex->acquire("console-attempts-mutex")) {
             return;
         }
 
-        $httpResources = HttpResource::find()
+        echo HttpResource::find()
             ->where([
                 'or',
                 ['attempted_at' => null],
@@ -27,7 +27,7 @@ class AttemptsController extends Controller {
                     ['or', ['fails' => 0], 'fails < fail_limit'],
                     [
                         '>=',
-                        new Expression('extract(epoch from now() - attempted_at)'),
+                        new Expression('round(extract(epoch from now() - attempted_at))'),
                         new Expression('attempt_frequency * 60')
                     ],
                     [
@@ -35,19 +35,15 @@ class AttemptsController extends Controller {
                         ['fails' => 0],
                         [
                             '>=',
-                            new Expression('extract(epoch from now() - attempted_at)'),
+                            new Expression('round(extract(epoch from now() - attempted_at))'),
                             new Expression('fail_delay * 60')
                         ]
                     ]
                 ]
             ])
-            ->all()
+            ->with('attempts')
+            ->createCommand()
+            ->getRawSql()
         ;
-
-        foreach ($httpResources as $httpResource) {
-            Yii::$app->queue->push(new AttemptJob([
-                'http_resource_id' => $httpResource->id
-            ]));
-        }
     }
 }

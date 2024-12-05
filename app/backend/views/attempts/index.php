@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= Html::a($attempt->httpResource->url, $attempt->httpResource->url, ['target' => '_blank']) ?></td>
                     <td class="text-end"><?=$attempt->http_code?></td>
                     <td class="text-end"><?=$attempt->number?></td>
-                    <td><?=date('Y-m-d H:i:s', $attempt->created_at)?></td>
+                    <td><?=$attempt->created_at?></td>
                 </tr>
             <?endforeach;?>
             </tbody>

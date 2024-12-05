@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </tr>
                 <tr>
                     <td><?=Yii::t('app','Attempted At')?></td>
-                    <td><?=date('Y-m-d H:i:s', $attempt->created_at)?></td>
+                    <td><?=$attempt->created_at?></td>
                 </tr>
             </tbody>
         </table>

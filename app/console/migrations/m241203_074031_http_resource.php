@@ -16,10 +16,12 @@ class m241203_074031_http_resource extends Migration
             'id' => $this->primaryKey(),
             'url' => $this->string()->notNull()->unique(),
             'attempt_frequency' => $this->tinyInteger()->notNull()->defaultValue(1),
-            'attempt_limit' => $this->bigInteger()->notNull()->defaultValue(0),
-            'delay' => $this->tinyInteger()->notNull()->defaultValue(1),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'fail_limit' => $this->bigInteger()->notNull()->defaultValue(0),
+            'fail_delay' => $this->tinyInteger()->notNull()->defaultValue(1),
+            'fails' => $this->bigInteger()->notNull()->defaultValue(0),
+            'attempted_at' => $this->datetime(),
+            'created_at' => $this->datetime()->notNull(),
+            'updated_at' => $this->datetime()->notNull(),
         ]);
     }
 

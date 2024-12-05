@@ -5,6 +5,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Model;
 use common\models\HttpResource;
+use yii\db\Expression;
 
 /**
  * HttpResource form
@@ -13,8 +14,8 @@ class HttpResourceForm extends Model
 {
     public $url;
     public $attempt_frequency;
-    public $attempt_limit;
-    public $delay;
+    public $fail_limit;
+    public $fail_delay;
 
     /**
      * {@inheritdoc}
@@ -31,11 +32,11 @@ class HttpResourceForm extends Model
             ['attempt_frequency', 'required'],
             ['attempt_frequency', 'number', 'min' => 0, 'max' => 10],
 
-            ['attempt_limit', 'required'],
-            ['attempt_limit', 'number', 'min' => 0, 'max' => PHP_INT_MAX],
+            ['fail_limit', 'required'],
+            ['fail_limit', 'number', 'min' => 0, 'max' => PHP_INT_MAX],
 
-            ['delay', 'required'],
-            ['delay', 'number', 'min' => 1, 'max' => 255],
+            ['fail_delay', 'required'],
+            ['fail_delay', 'number', 'min' => 1, 'max' => 255],
         ];
     }
 
@@ -53,10 +54,10 @@ class HttpResourceForm extends Model
         $httpResource = new HttpResource();
         $httpResource->url = $this->url;
         $httpResource->attempt_frequency = $this->attempt_frequency;
-        $httpResource->attempt_limit = $this->attempt_limit;
-        $httpResource->delay = $this->delay;
-        $httpResource->created_at = time();
-        $httpResource->updated_at = $httpResource->created_at;
+        $httpResource->fail_limit = $this->fail_limit;
+        $httpResource->fail_delay = $this->fail_delay;
+        $httpResource->created_at = new Expression('NOW()');
+        $httpResource->updated_at = new Expression('NOW()');
 
         return $httpResource->save();
     }

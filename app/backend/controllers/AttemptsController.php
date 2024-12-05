@@ -47,7 +47,7 @@ class AttemptsController extends Controller
             return $this->goHome();
         }
 
-        $attempts = Attempt::find()->orderBy(['created_at' => SORT_DESC]);
+        $attempts = Attempt::find()->with('httpResource')->orderBy(['created_at' => SORT_DESC]);
 
         $pagination = new Pagination([
             'defaultPageSize' => 50,
