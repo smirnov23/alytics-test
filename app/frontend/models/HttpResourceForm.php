@@ -27,7 +27,7 @@ class HttpResourceForm extends Model
             ['url', 'url'],
             ['url', 'unique',
                 'targetClass' => '\common\models\HttpResource',
-                'message' => Yii::t('app', 'This URL has already been taken.')
+                'message' => Yii::t('app', Yii::t('app', 'This URL has already been taken.'))
             ],
             ['url', 'string', 'min' => 4, 'max' => 255],
 
@@ -40,6 +40,18 @@ class HttpResourceForm extends Model
 
             ['fail_delay', 'required'],
             ['fail_delay', 'number', 'min' => 1, 'max' => 255],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels() {
+        return [
+            "url" => Yii::t("app", "URL"),
+            "attempt_frequency" => Yii::t("app", "Attempt Frequency"),
+            "fail_limit" => Yii::t("app", "Fail Limit"),
+            "fail_delay" => Yii::t("app", "Fail Delay"),
         ];
     }
 

@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'fail_limit')->textInput(['type' => 'number', 'required' => true, 'value' => 0]) ?>
                 <?= $form->field($model, 'fail_delay')->textInput(['type' => 'number', 'required' => true, 'value' => 1]) ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
             </div>
