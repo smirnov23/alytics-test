@@ -10,7 +10,7 @@ $params = array_merge(
 return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'queue', 'mutex'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -30,6 +30,18 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'queue' => [
+            'class' => \yii\queue\amqp_interop\Queue::class,
+            'driver' => yii\queue\amqp_interop\Queue::ENQUEUE_AMQP_LIB,
+            'host' => 'rabbitmq',
+            'port' => 5672,
+            'user' => 'user',
+            'password' => 'password',
+            'queueName' => 'queue',
+        ],
+        'mutex' => [
+            'class' => \yii\mutex\FileMutex::class,
         ],
     ],
     'params' => $params,

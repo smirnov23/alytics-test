@@ -32,10 +32,11 @@ services:
       - alytics-network
 
   phpfpm:
-    image: bitnami/php-fpm:latest
+    build: .
     container_name: phpfpm
     volumes:
       - "./app:/app"
+    command: bash -c "chown www-data:www-data -R /app && cd /app && (yes | php yii migrate/up) && service supervisor start && service cron start && php-fpm"
     depends_on:
       #- postgres
       rabbitmq:
@@ -54,7 +55,7 @@ services:
       VIRTUAL_HOST: local.host
       VIRTUAL_PORT: 80
     volumes:
-      - "./config/nginx/local.host.conf:/opt/bitnami/nginx/conf/server_blocks/local.host.conf:ro"
+      - "./system/opt/bitnami/nginx/conf/server_blocks/local.host.conf:/opt/bitnami/nginx/conf/server_blocks/local.host.conf:ro"
       - "./app:/app"
     depends_on:
       - phpfpm
@@ -73,21 +74,6 @@ services:
       PGADMIN_DEFAULT_PASSWORD: password
     depends_on:
       - postgres
-    networks:
-      - alytics-network
-
-  # development container
-  # after development it can be deleted
-  dev-container:
-    image: composer/composer
-    container_name: dev-container
-    command: /bin/bash
-    tty: true
-    volumes:
-      - "./app:/app"
-    depends_on:
-      rabbitmq:
-        condition: service_healthy
     networks:
       - alytics-network
 
